@@ -1,6 +1,23 @@
-import User from "../models/User.js";
+import Admin from "../models/adminModel.js";
+import User from "../models/user.js";
 import Message from "../models/Message.js";
+import generateToken from "../utils/generateToken.js";
 
+export const adminLogin = async (req, res) => {
+  const { email, password } = req.body;
+
+  const admin = await Admin.findOne({ email });
+
+  if (admin && (await admin.matchPassword(password))) {
+    res.json({
+      _id: admin._id,
+      name: admin.name,
+      token: generateToken(admin._id, "admin"), // extra 'admin' type for clarity
+    });
+  } else {
+    res.status(401).json({ error: "Invalid email or password" });
+  }
+};
 // Get all users
 export const getAllUsers = async (req, res) => {
   try {
@@ -19,6 +36,12 @@ export const getAllMessages = async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
+};
+
+export const getStats = async (req, res) => {
+  const users = await User.countDocuments();
+  const messages = await Message.countDocuments();
+  res.json({ users, messages });
 };
 
 // Optional: Delete user
@@ -40,3 +63,4 @@ export const deleteMessage = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
