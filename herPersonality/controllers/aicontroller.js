@@ -1,4 +1,5 @@
 import Message from "../models/Message.js";
+import {getOllamaResponse} from "../ollamaAi/ollama.js";
 
 // Dummy AI Logic - responds with a flirty echo
 const generateDanameReply = (userMessage) => {
@@ -28,7 +29,7 @@ export const respondToUser = async (req, res) => {
     await userMessage.save();
 
     // Generate and save Daname's reply
-    const replyContent = generateDanameReply(content);
+    const replyContent = getOllamaResponse(content);
     const danameReply = new Message({
       sender: req.user.id,
       content: replyContent,
