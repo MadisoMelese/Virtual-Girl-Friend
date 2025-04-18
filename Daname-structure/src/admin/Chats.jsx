@@ -6,7 +6,7 @@ const Chats = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("adminToken");
-    API.get("/admin/chats", {
+    API.get("/admin/messages", {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => setChats(res.data))
