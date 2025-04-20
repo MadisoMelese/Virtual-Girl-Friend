@@ -2,20 +2,6 @@ import Message from "../models/Message.js";
 import {getOllamaResponse} from "../ollamaAi/ollama.js";
 
 // Dummy AI Logic - responds with a flirty echo
-const generateDanameReply = (userMessage) => {
-  const lower = userMessage.toLowerCase();
-
-  if (lower.includes("hello") || lower.includes("hi")) {
-    return "Hey babe, I was just thinking about you.";
-  } else if (lower.includes("how are you")) {
-    return "I’m always better when I hear from you.";
-  } else if (lower.includes("love")) {
-    return "Aww, I love you more!";
-  } else {
-    return `Hmm… tell me more about that.`;
-  }
-};
-
 export const respondToUser = async (req, res) => {
   try {
     const { content } = req.body;
