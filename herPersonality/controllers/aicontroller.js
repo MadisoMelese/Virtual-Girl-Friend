@@ -14,7 +14,7 @@ export const respondToUser = async (req, res) => {
     });
     await userMessage.save();
 
-    // Generate and save Daname's reply
+    // Generate and save Daname's response
     const replyContent = getOllamaResponse(content);
     const danameReply = new Message({
       sender: req.user.id,
